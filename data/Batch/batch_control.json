@@ -22,7 +22,10 @@
       "Refine trailing edge old": 3,
       "Refine trailing edge new": 6,
       "Refine trailing edge ratio" : 3,
-      "Number of points on spline" : 200
+      "Number of points on spline" : 200,
+      "Write contour": [
+        "yes"
+      ]
     },
     "Airfoil trailing edge": {
       "Upper side blending length": 30.0,

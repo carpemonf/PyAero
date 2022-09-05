@@ -76,6 +76,7 @@ class Batch:
                                   ref_te=refinement['Refine trailing edge old'],
                                   ref_te_n=refinement['Refine trailing edge new'],
                                   ref_te_ratio=refinement['Refine trailing edge ratio'])
+            write_contour = self.batch_control['Airfoil contour refinement']['Write contour']
 
             # trailing edge
             if trailing_edges[i] == 'yes':
@@ -98,6 +99,30 @@ class Batch:
             # make mesh
             wind_tunnel = Meshing.Windtunnel()
             contour = self.app.mainwindow.airfoil.spline_data[0]
+
+            if write_contour[i] == 'yes':
+
+                # get coordinates of modified contour
+                x, y = contour
+                airfoil_name = basename
+                contour_name = os.path.join(mesh_path, basename + "_contour.txt")
+
+                message = f'Starting modified contour export for airfoil {airfoil}'
+                print(message)
+                logger.info(message)
+
+                try:
+                    # export modified contour
+                    with open(contour_name, 'w') as f:
+                        f.write('#\n')
+                        for i, _ in enumerate(x):
+                            f.write('{:10.6f} {:10.6f}\n'.format(x[i], y[i]))
+                except IOError as error:
+                    logger.info('IO error: {}'.format(error))
+
+                message = f'Finished modified contour export for airfoil {airfoil} to {contour_name}'
+                print(message)
+                logger.info(message)
 
             # mesh around airfoil
             acm = self.batch_control['Airfoil contour mesh']
