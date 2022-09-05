@@ -302,6 +302,16 @@ def main():
     if batchmode:
         app = QtCore.QCoreApplication(sys.argv)
 
+        # check if output folder does exist
+        if not os.path.exists(OUTPUTDATA):
+            os.mkdir(OUTPUTDATA, mode=0o777)
+            print('Folder %s created.' % (OUTPUTDATA))
+
+        # check if logs folder does exist
+        if not os.path.exists(LOGDATA):
+            os.mkdir(LOGDATA, mode=0o777)
+            print('Folder %s created.' % (LOGDATA))
+
         # FIXME
         # FIXME check for proper batch control file
         # FIXME
